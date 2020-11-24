@@ -3,14 +3,7 @@ from django.shortcuts import render
 from .models import *
 
 
-def home(request):
-    return render(request, 'blog/home.html.j2')
-
-
-def index(request):
-    return HttpResponse("hello ishwar")
-
-
 def post_list(request):
     post_list = Post.objects.all()
-    return render(request, 'blog/blog.html.j2', {'post_list': post_list})
+    print(post_list)
+    return render(request, 'blog/post_list.html.j2', {'post': post_list})

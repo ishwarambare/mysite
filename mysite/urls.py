@@ -27,7 +27,6 @@ admin.site.index_title = "Welcome to ISHWAR blog Portal"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home, name='my_site'),
     path('blog/', include('blog.urls', namespace='blog')),
 ]
 
