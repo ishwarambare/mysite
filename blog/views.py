@@ -30,6 +30,7 @@ def post_detail(request, year, month, day, post):
                              publish__day=day)
 
     comments = post.comments.filter(active=True)
+    print(comments)
     new_comment = None
     if request.method == 'POST':
         comment_form = CommentForm(data=request.POST)
