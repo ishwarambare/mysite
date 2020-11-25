@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from blog.models import *
 
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'author', 'publish', 'status']
@@ -15,5 +16,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'post', 'created', 'active')
+    # list_display_links = ['email']
+    # list_editable = ['name','post']
     list_filter = ('active', 'created', 'updated')
     search_fields = ('name', 'email', 'body')
