@@ -8,6 +8,45 @@
       Published {{ post.publish }} by {{ post.author }}
     </p>
   {% endfor %}
+
+
+{% if posts.has_other_pages %}
+
+<div class="pagination">
+
+    <span class="step-links">
+
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">Previous</a>
+        {% endif %}
+
+    <span class="current">
+           Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+    </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">Next</a>
+        {% endif %}
+
+    </span>
+
+</div>
+{% endif %}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  {# {% with page=page_obj %} #}
+      {# {% include "blog/post/pagination.html.j2" %} #}
+  {# {% endwith %} #}
+
+  
+  {# {% include "blog/post/pagination.html.j2" with page=page_obj %} #}
 {% endblock %}
 
 

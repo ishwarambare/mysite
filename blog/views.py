@@ -8,7 +8,7 @@ from django.views.generic import ListView
 
 def post_list(request):
     object_list = Post.published.all()
-    paginator = Paginator(object_list, 3)
+    paginator = Paginator(object_list, 2)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -28,10 +28,9 @@ def post_detail(request, year, month, day, post):
 
     return render(request, 'blog/post/detail.html.j2', {'post': post})
 
-
-class PostListView(ListView):
-    queryset = Post.published.all()
-    print(queryset)
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html.j2'
+# class PostListView(ListView):
+#     queryset = Post.published.all()
+#     print(queryset)
+#     context_object_name = 'posts'
+#     paginate_by = 3
+# template_name = 'blog/post/list.html.j2'
