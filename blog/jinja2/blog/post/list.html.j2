@@ -2,6 +2,12 @@
 {% block title %}My Blog{% endblock %}
 {% block content %}
   <h1>My Blog</h1>
+
+
+  {% if tag %}
+    <h2>Posts tagged with "{{ tag.name }}"</h2>
+  {% endif %}
+
   {% for post in posts %}
     <h2><a href="{{ url ('blog:post_detail',kwargs={'year':post.publish.year,'month':post.publish.month,'day':post.publish.day,'post':post.slug}) }}">{{ post.title }}</a></h2>
     <p class="date">
@@ -11,11 +17,8 @@
 
 
 {% if posts.has_other_pages %}
-
 <div class="pagination">
-
     <span class="step-links">
-
         {% if posts.has_previous %}
             <a href="?page={{ posts.previous_page_number }}">Previous</a>
         {% endif %}
@@ -27,9 +30,7 @@
         {% if posts.has_next %}
             <a href="?page={{ posts.next_page_number }}">Next</a>
         {% endif %}
-
     </span>
-
 </div>
 {% endif %}
 
