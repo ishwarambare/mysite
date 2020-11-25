@@ -1,16 +1,10 @@
 {% extends "base.html.j2" %}
+{# {% load  %} #}
 {% block title %}{{ post.title }}{% endblock %}
+
 {% block content %}
-{# {% with comments.count as total_comments %} #}
- {# {{ total_comments }} comment{{ total_comments|pluralize }} #}
-{# {% endwith %} #}
-
-{% with foo = comments.count() %}
-    {{ foo }}
-{% endwith %}
-
 {% with total_comments=comments.count() %}
-    <h2>{{ total_comments }} Total Comments</h2>
+    <h4>{{ total_comments }} Total Comments</h4>
 {% endwith %}
   <h1>{{ post.title }}</h1>
   <p class="date">
@@ -21,19 +15,6 @@
   <a href="{{ url('blog:post_share', kwargs={'post_id':post.id}) }}">Share this post</a>
   </p>
 
-{# {% if comments %}
-  {% for comment in comments %}
-    <div class="comment">
-      <p class="info">
-        Comment {{ comment.counter }} by {{ comment.name }}
-        {{ comment.created }}
-      </p>
-      {{ comment.body }}
-    </div>
-  {% endfor %}
-{% else %}
-    <p>There are no comments yet.</p>
-{% endif %} #}
 
 {% for comment in comments %}
     <div class="comment">
@@ -53,7 +34,7 @@
   {% else %}
     <h2>Add a new comment</h2>
     <form method="post">
-      {{ comment_form }}
+      {{ crispy(comment_form) }}
       <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
       <p><input type="submit" value="Add comment"></p>
     </form>
