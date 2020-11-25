@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from django.http import HttpResponse
 
-from .forms import EmailPostForm
+from .forms import EmailPostForm, CommentForm
 from .models import *
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, \
@@ -29,7 +29,27 @@ def post_detail(request, year, month, day, post):
                              publish__month=month,
                              publish__day=day)
 
-    return render(request, 'blog/post/detail.html.j2', {'post': post})
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
+    # post_tags_ids = post.tags.values_list('id', flat=True)
+    # similar_posts = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
+    # similar_posts = similar_posts.annotate(same_tags=Count('tags')).order_by('-same_tags','-publish')[:4]
+
+    return render(request, 'blog/post/detail.html.j2', {'post': post,
+                                                        'comments': comments,
+                                                        'new_comment': new_comment,
+                                                        'comment_form': comment_form, })
+
+    # return render(request, 'blog/post/detail.html.j2', {'post': post})
 
 
 # class PostListView(ListView):

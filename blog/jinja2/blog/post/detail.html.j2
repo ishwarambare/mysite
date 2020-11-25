@@ -1,6 +1,17 @@
 {% extends "base.html.j2" %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
+{# {% with comments.count as total_comments %} #}
+ {# {{ total_comments }} comment{{ total_comments|pluralize }} #}
+{# {% endwith %} #}
+
+{% with foo = comments.count() %}
+    {{ foo }}
+{% endwith %}
+
+{% with total_comments=comments.count() %}
+    <h2>{{ total_comments }} Total Comments</h2>
+{% endwith %}
   <h1>{{ post.title }}</h1>
   <p class="date">
     Published {{ post.publish }} by {{ post.author }}
