@@ -11,5 +11,3 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'body')
     date_hierarchy = 'publish'
     ordering = ('status', 'publish')
-
-
