@@ -23,14 +23,15 @@ h2 {
 #content { 
     float:left;
     width:60%;
-    padding:0 0 0 30px; 
+    padding:0 0 0 30px;
+    background: #cccccc;
 }
 
-#sidebar { 
+#sidebar {
     float:right;
-    width:30%;
+    width:35%;
     padding:10px;
-    background:#efefef; 
+    background:darkkhaki;
     height:100%;
 }
 
