@@ -46,4 +46,16 @@
 {% else %}
     <p>There are no comments yet.</p>
 {% endfor %}
+
+
+  {% if new_comment %}
+    <h2>Your comment has been added.</h2>
+  {% else %}
+    <h2>Add a new comment</h2>
+    <form method="post">
+      {{ comment_form }}
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+      <p><input type="submit" value="Add comment"></p>
+    </form>
+  {% endif %}
 {% endblock %}
