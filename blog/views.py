@@ -15,7 +15,7 @@ from .forms import EmailPostForm, CommentForm
 from taggit.models import Tag
 
 
-def post_list(request,tag_slug=None):
+def post_list(request, tag_slug=None):
     object_list = Post.published.all()
     tag = None
 
@@ -31,7 +31,7 @@ def post_list(request,tag_slug=None):
         posts = paginator.page(1)
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
-    return render(request, 'blog/post/list.html.j2', {'page': page, 'posts': posts,'tag': tag})
+    return render(request, 'blog/post/list.html.j2', {'page': page, 'posts': posts, 'tag': tag})
 
 
 def post_detail(request, year, month, day, post):
