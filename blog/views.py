@@ -54,8 +54,12 @@ def post_share(request, post_id):
                       f"{cd['name']}\'s comments: {cd['comments']}"
             send_mail(subject, message, 'admin@myblog.com', [cd['to']])
             sent = True
+            return render(request, 'blog/post/share.html.j2', {'post': post,
+                                                               'form': form,
+                                                               'sent': sent})
+
     else:
         form = EmailPostForm()
-    return render(request, 'blog/post/share.html.j2', {'post': post,
-                                                       'form': form,
-                                                       'sent': sent})
+        return render(request, 'blog/post/share.html.j2', {'post': post,
+                                                           'form': form,
+                                                           'sent': sent})

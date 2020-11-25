@@ -8,6 +8,7 @@
         <h1>Share "{{ post.title }}" by e-mail</h1>
         <form method="post">
           <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            {{ form }}
             {{ csrf_input }}
           <input type="submit" value="Send e-mail">
         </form>
