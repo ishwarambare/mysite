@@ -15,7 +15,9 @@
         <ul>
         {% for post in show_latest_posts() %}
         <li>
-        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        {# <a href="<a href="{{ url ('blog:post_detail',kwargs={'year':post.publish.year,'month':post.publish.month,'day':post.publish.day,'post':post.slug}) }}">{{ post.title }}</a> #}
+        <a href="{{ url ('blog:post_detail',kwargs={'year':post.publish.year,'month':post.publish.month,'day':post.publish.day,'post':post.slug}) }}">{{ post.title }}</a>
+        {# <a href="<a href="{{ url ('blog:post_detail',kwargs={'year':post.publish.year,'month':post.publish.month,'day':post.publish.day,'post':post.slug}) }}">{{ post.title }}</a> #}
         </li>
         {% endfor %}
         </ul>
