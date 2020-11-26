@@ -41,7 +41,8 @@ def show_latest_posts(count=5):
 # def show_latest_posts():
     latest_posts = Post.published.order_by('-publish')[:count]
     # latest_posts = Post.published.order_by('-publish')[:3]
-    return {'latest_posts': latest_posts}
+    # return {'latest_posts': latest_posts}
+    return latest_posts
 
 
 def markdown_format(text):
