@@ -8,8 +8,12 @@
     </div>
 
     <div id="sidebar">
-        <h2>Latest Post here</h2>
-        <p>newly added</p>
+        <h2>All My Post</h2>
+        <p>This is my blog. I've written {{total_posts()}} posts so far.</p>
+
+         <h6>Latest posts</h6>
+
+        {{ show_latest_posts() }}
     </div>
 
 </body>

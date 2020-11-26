@@ -1,7 +1,17 @@
 from crispy_forms.templatetags.crispy_forms_filters import as_crispy_form, as_crispy_field
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.urls import reverse
-from jinja2 import Environment
+from django.template.defaultfilters import json_script, pluralize
+from django.contrib.humanize.templatetags.humanize import naturaltime
+from django.contrib.humanize.templatetags.humanize import naturalday
+from jinja2 import Environment, contextfunction, contextfilter
+import re
+import datetime
+from django.conf import settings
+from django.utils.safestring import mark_safe
+import markdown
+
+from blog.models import Post
 
 
 def environment(**options):
@@ -10,6 +20,29 @@ def environment(**options):
         'static': staticfiles_storage.url,
         "crispy": as_crispy_form,
         "as_crispy": as_crispy_field,
+        "total_posts": total_posts,
+        "show_latest_posts": show_latest_posts,
+        "markdown_format": markdown_format,
         'url': reverse,
     })
+
+    env.filters['total_posts'] = total_posts
+    env.filters['show_latest_posts'] = show_latest_posts
+    env.filters['markdown'] = markdown_format
+
     return env
+
+
+def total_posts():
+    return Post.published.count()
+
+
+def show_latest_posts(count=5):
+# def show_latest_posts():
+    latest_posts = Post.published.order_by('-publish')[:count]
+    # latest_posts = Post.published.order_by('-publish')[:3]
+    return {'latest_posts': latest_posts}
+
+
+def markdown_format(text):
+    return mark_safe(markdown.markdown(text))
