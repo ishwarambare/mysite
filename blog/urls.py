@@ -21,4 +21,5 @@ urlpatterns = [
     path('post-api/', api_views.PostView.as_view(), ),
     path('comment-api/', api_views.CommentView.as_view(), ),
     path('post-detail-api/', api_views.PostDetialView.as_view(), ),
+    path('add-comment-api/', api_views.AddComment.as_view(), ),
 ]
