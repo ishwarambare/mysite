@@ -18,12 +18,23 @@ class PostView(APIView):
 
 
 class CommentView(APIView):
-    def get(self,request):
+    def get(self, request):
         try:
-            data=Comment.objects.all()
-            s_data=CommentSerializer(data, many=True).data
+            data = Comment.objects.all()
+            s_data = CommentSerializer(data, many=True).data
             return Response(data={'status': True, "result": s_data}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(data={'status': False, "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-            
+
+
+class PostDetialView(APIView):
+    def post(self, request):
+        try:
+            data = request.data['post']
+            data = Post.objects.filter(title__icontains=data)
+            s_data = PostSerializer(data, many=True).data
+            return Response(data={'status': True, "result": s_data}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(data={'status': False, "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
