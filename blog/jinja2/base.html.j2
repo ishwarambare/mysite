@@ -22,6 +22,17 @@
         {% endfor %}
         </ul>
 
+        {# {% get_most_commented_posts as most_commented_posts %} #}
+    
+    <h6>Most commented posts</h6>
+    <ul>
+      {% for post in get_most_commented_posts() %}
+        <li>
+        <a href="{{ url ('blog:post_detail',kwargs={'year':post.publish.year,'month':post.publish.month,'day':post.publish.day,'post':post.slug}) }}">{{ post.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+
     </div>
 
 </body>

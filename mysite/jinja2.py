@@ -1,5 +1,6 @@
 from crispy_forms.templatetags.crispy_forms_filters import as_crispy_form, as_crispy_field
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.db.models import Count
 from django.urls import reverse
 from django.template.defaultfilters import json_script, pluralize
 from django.contrib.humanize.templatetags.humanize import naturaltime
@@ -23,6 +24,7 @@ def environment(**options):
         "total_posts": total_posts,
         "show_latest_posts": show_latest_posts,
         "markdown_format": markdown_format,
+        "get_most_commented_posts": get_most_commented_posts,
         'url': reverse,
     })
 
@@ -44,6 +46,12 @@ def show_latest_posts(count=5):
     # latest_posts = Post.published.order_by('-publish')[:3]
     # return {'latest_posts': latest_posts}
     return latest_posts
+
+
+def get_most_commented_posts(count=5):
+    return Post.published.annotate(
+               total_comments=Count('comments')
+           ).order_by('-total_comments')[:count]
 
 
 def markdown_format(text):
