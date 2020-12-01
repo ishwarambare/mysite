@@ -31,17 +31,17 @@ class Post(models.Model):
         ('published', 'Published'),
     )
     title = models.CharField(max_length=250, null=True, blank=True)
-    slug = models.SlugField(max_length=250, unique_for_date='publish')
+    slug = models.SlugField(max_length=250, unique_for_date='publish', null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     # images = GenericRelation(Image)
-    image = models.ImageField(upload_to='blog/', null=True, blank=True, default='FL14.jpg/')
+    image = models.ImageField(upload_to='blog/', null=True, blank=True)
     body = models.TextField(null=True, blank=True)
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
-                              default='draft')
+                              default='draft', null=True, blank=True)
 
     objects = models.Manager()
     published = PublishedManager()

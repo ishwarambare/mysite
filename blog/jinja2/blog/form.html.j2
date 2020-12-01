@@ -2,7 +2,7 @@
 {% block content %}
 <form action="" method="post">
      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-           {{ crispy(form) }}
-           <input type="submit" value="Uplode Post">
+     {{ crispy(form) }}
+     <input type="submit" value="Uplode Post">
 </form>
 {% endblock content %}

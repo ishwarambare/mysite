@@ -60,6 +60,33 @@ class AddComment(APIView):
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UplodeImage(generics.ListCreateAPIView):
+# class UplodeImage(generics.ListCreateAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+
+class UplodeImage(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            file = request.data['file']
+            image = Post.objects.create(image=file)
+            return Response(data={'status': True, "result": image}, status=status.HTTP_200_OK)
+            # return Response(data={'message': "Uploaded"}))
+        except Exception as e:
+            # pass
+            return Response(data={'status': False, "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UplodeImage1(APIView):
+    def post(self, request):
+        try:
+            image = request.data['file']
+            title = request.data['title']
+            user = request.data['author']
+            data = Post.objects.create(title=title, image=image, author_id=user)
+            sdata = PostSerializer(data).data
+            return Response(data={'status': True, "result": sdata}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(data={'status': False, "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)

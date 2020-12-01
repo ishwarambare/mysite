@@ -25,7 +25,8 @@ urlpatterns = [
     # path('mail-api/', api_views.MailApiView.as_view({'POST': 'mail_send'}), ),
 
 
-    path('uplode-post-api/', api_views.UplodeImage.as_view(), ),
+    # path('uplode-post-api/', api_views.UplodeImage.as_view(), ),
+    path('uplode-post-api/', api_views.UplodeImage1.as_view(), ),
 
 
 ]
