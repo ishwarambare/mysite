@@ -21,3 +21,10 @@ class PostForm(forms.ModelForm):
         model = Post
         # fields = ('title', 'author', 'image', 'body', 'status','publish','')
         fields = "__all__"
+
+
+
+class PostFormNew(forms.ModelForm):
+    class Meta:
+        model=Post
+        fields='__all__'

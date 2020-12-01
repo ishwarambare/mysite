@@ -15,6 +15,7 @@ urlpatterns = [
     path('<int:year>/<int:month>/<int:day>/<slug:post>/', views.post_detail, name='post_detail'),
     path('<int:post_id>/share/', views.post_share, name='post_share'),
     path('form/', views.postform, name='form'),
+    # path('form1/', views.MyFormView.as_view(), name='form1'),
 
     ##################### API ########################
 
@@ -27,6 +28,11 @@ urlpatterns = [
 
     # path('uplode-post-api/', api_views.UplodeImage.as_view(), ),
     path('uplode-post-api/', api_views.UplodeImage1.as_view(), ),
+
+
+
+    ##################### postexperiment ########################
+    path('try-form/', views.formdataview, ),
 
 
 ]

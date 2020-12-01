@@ -30,13 +30,16 @@
           {# {{ image(post.header_image, "fill-1024x200") }} #}
           {# <img src="{{h.hostel_card_image.url}}" alt="gostops" class="img-fluid w-100" loading="lazy"> #}
           {# <img src="{{post.image.url}}" alt="not availabe" class="img-fluid w-100" loading="lazy"> #}
-          <img src="{{post.image.url}}" alt="not availabe">
+          {% if post.image %}
+            <img src="{{post.image.url}}" alt="not availabe">
+          {% else %}
+          {% endif %}
         </div>
     </div>
 </div>
 
 
-  {% endfor %}
+{% endfor %}
  
 
 

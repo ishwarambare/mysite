@@ -13,16 +13,16 @@ class PublishedManager(models.Manager):
         return super().get_queryset().filter(status='published')
 
 
-# class Image(models.Model):
-#     name = models.CharField(max_length=500, blank=True, null=True)
-#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
-#     object_id = models.PositiveIntegerField(blank=True, null=True)
-#     content_object = GenericForeignKey('content_type', 'object_id')
-#     image = models.ImageField(upload_to='images/')
-#
-#     class Meta:
-#         verbose_name_plural = 'Images'
-#         verbose_name = 'Images'
+class Image(models.Model):
+    name = models.CharField(max_length=500, blank=True, null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
+    object_id = models.PositiveIntegerField(blank=True, null=True)
+    content_object = GenericForeignKey('content_type', 'object_id')
+    image = models.ImageField(upload_to='images/')
+
+    class Meta:
+        verbose_name_plural = 'Images'
+        verbose_name = 'Images'
 
 
 class Post(models.Model):
@@ -33,7 +33,7 @@ class Post(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True)
     slug = models.SlugField(max_length=250, unique_for_date='publish', null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
-    # images = GenericRelation(Image)
+    images = GenericRelation(Image)
     image = models.ImageField(upload_to='blog/', null=True, blank=True)
     body = models.TextField(null=True, blank=True)
     publish = models.DateTimeField(default=timezone.now)

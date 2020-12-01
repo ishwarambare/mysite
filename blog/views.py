@@ -1,8 +1,9 @@
 from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404,redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
+from django.views import View
 from django.views.generic import ListView
 from blog.models import *
 from blog.forms import *
@@ -92,7 +93,40 @@ def postform(request):
         print(form)
         if form.is_valid():
             form.save()
-            # return redirect('blog:post_list')
             return HttpResponseRedirect(reverse('blog:post_list'))
+        else:
+            return render(request, 'blog/form.html.j2', {'form': form})
+    else:
+        return render(request, 'blog/form.html.j2', {'form': form})
+
+
+# class MyFormView(View):
+#     form_class = PostForm
+#     initial = {'key': 'value'}
+#     template_name = 'blog/form.html.j2/'
+#
+#     def get(self, request, *args, **kwargs):
+#         form = self.form_class(initial=self.initial)
+#         return render(request, self.template_name, {'form': form})
+#
+#     def post(self, request, *args, **kwargs):
+#         form = self.form_class(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             # return HttpResponseRedirect('/success/')
+#             return HttpResponseRedirect(reverse('blog:post_list'))
+#
+#         return render(request, self.template_name, {'form': form})
+
+
+def formdataview(request):
+    form = PostFormNew()
+    if request.method == 'POST':
+        form = PostFormNew(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('blog:post_list'))
+        else:
+            return render(request, 'blog/form.html.j2', {'form': form})
     else:
         return render(request, 'blog/form.html.j2', {'form': form})
