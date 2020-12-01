@@ -5,6 +5,7 @@ from blog.models import *
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    fields = ['title', 'slug', 'author', 'body', 'image']
     list_display = ['title', 'author', 'publish', 'status']
     prepopulated_fields = {"slug": ("title",)}
     list_filter = ('status', 'created', 'publish', 'author')

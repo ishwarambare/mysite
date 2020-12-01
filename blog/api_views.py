@@ -1,10 +1,11 @@
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
 from blog.models import Post, Comment
 from blog.serializers import PostSerializer, CommentSerializer
+from rest_framework import generics
 
 
 class PostView(APIView):
@@ -49,3 +50,16 @@ class AddComment(APIView):
             return Response(data={'status': True, "result": s_data}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(data={'status': False, "message": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class MailApiView(viewsets.ViewSet):
+#     def mail_send(self, request):
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UplodeImage(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

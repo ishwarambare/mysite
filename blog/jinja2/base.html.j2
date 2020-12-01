@@ -9,9 +9,9 @@
 
     <div id="sidebar">
         <h2>All My Post</h2>
+        <div class="button btn-success"><a href="{{ url('blog:form') }}">uplode your post</a></div>
         <p>This is my blog. I've written {{total_posts()}} posts so far.</p>
-
-         <h6>Latest post</h6>
+        <h6>Latest post</h6>
         <ul>
         {% for post in show_latest_posts() %}
         <li>
@@ -24,6 +24,11 @@
 
         {# {% get_most_commented_posts as most_commented_posts %} #}
     
+    
+    
+    
+    
+    
     <h6>Most commented posts</h6>
     <ul>
       {% for post in get_most_commented_posts() %}
@@ -32,7 +37,6 @@
         </li>
       {% endfor %}
     </ul>
-
     </div>
 
 </body>

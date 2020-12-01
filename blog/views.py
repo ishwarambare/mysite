@@ -1,10 +1,11 @@
 from django.db.models import Count
-from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404,redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.mail import send_mail
 from django.views.generic import ListView
-from .models import *
-from .forms import EmailPostForm, CommentForm
+from blog.models import *
+from blog.forms import *
 from taggit.models import Tag
 
 
@@ -51,7 +52,6 @@ def post_detail(request, year, month, day, post):
                                                         'comment_form': comment_form, })
 
 
-
 # class PostListView(ListView):
 #     queryset = Post.published.all()
 #     print(queryset)
@@ -83,3 +83,16 @@ def post_share(request, post_id):
         return render(request, 'blog/post/share.html.j2', {'post': post,
                                                            'form': form,
                                                            'sent': sent})
+
+
+def postform(request):
+    form = PostForm()
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        print(form)
+        if form.is_valid():
+            form.save()
+            # return redirect('blog:post_list')
+            return HttpResponseRedirect(reverse('blog:post_list'))
+    else:
+        return render(request, 'blog/form.html.j2', {'form': form})

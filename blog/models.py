@@ -3,10 +3,27 @@ from django.utils import timezone
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
+from django.template.defaultfilters import slugify
+
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(status='published')
+
+
+# class Image(models.Model):
+#     name = models.CharField(max_length=500, blank=True, null=True)
+#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
+#     object_id = models.PositiveIntegerField(blank=True, null=True)
+#     content_object = GenericForeignKey('content_type', 'object_id')
+#     image = models.ImageField(upload_to='images/')
+#
+#     class Meta:
+#         verbose_name_plural = 'Images'
+#         verbose_name = 'Images'
+
 
 class Post(models.Model):
     STATUS_CHOICES = (
@@ -16,6 +33,8 @@ class Post(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True)
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
+    # images = GenericRelation(Image)
+    image = models.ImageField(upload_to='blog/', null=True, blank=True, default='FL14.jpg/')
     body = models.TextField(null=True, blank=True)
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -41,6 +60,10 @@ class Post(models.Model):
                              self.publish.month,
                              self.publish.day, self.slug])
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,
@@ -58,4 +81,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment by {self.name} on {self.post}'
-
