@@ -1,6 +1,6 @@
 {% extends "base.html.j2" %}
 {% block content %}
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
      {{ crispy(form) }}
      <input type="submit" value="Uplode Post">
